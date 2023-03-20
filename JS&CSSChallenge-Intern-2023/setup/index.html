@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Frontend challenge</title>
+	<meta name="author" content="">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://embedsocial.com/cdn/fonts/roboto/stylesheet.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<div class="accordion">
+				<h4 class="accordion-title">
+					Settings panel
+				</h4>
+			</div>
+			<div class="settings">
+				<label class="label">
+					Number of columns
+				</label>
+				<div>
+				<select id="numberOfColumns" class="form-control">
+					<option value="1" onchange="sortbyColumns('1')">1</option>
+					<option value="2" onchange="sortbyColumns('2')">2</option>
+					<option value="3" onchange="sortbyColumns('3')">3</option>
+					<option value="4" onchange="sortbyColumns('4')">4</option>
+					<option value="5" onchange="sortbyColumns('5')">5</option>
+					<option value="6" onchange="sortbyColumns('6')" selected >dynamic</option>
+				</select>
+				</div>
+				<!--END of Number of Coloumns-->
+
+				
+
+				<!--Change the card background-->
+				<div>
+				<label class="label">
+					Card background color
+				</label>
+				<input id="cardBackgroundColor" class="form-control" type="color"  onchange="changecolorInput()" />
+				</div>
+				<!--END-->
+
+
+
+
+				<!--Space Between Cards GAP-->
+				<div>
+				<label class="label" for="cardSpaceBetween">
+					Cards space between
+				</label>
+				<input type="range" id="gapInput" onchange="changeGap()">
+				</div>
+				<!--///-->
+
+
+
+				<!--Choose Theme With Radios :\ -->
+				<div>
+				<label class="label">
+					Choose theme
+				</label>
+
+				<div class="radio-group" >
+					<div class="radio-select">
+						<input type="radio"  name="theme" value="light" checked onchange="changeTheme(this.value)">
+						<label for="light">Light</label>
+					</div>
+					<div class="radio-select">
+						<input type="radio" name="theme" value="dark" onchange="changeTheme(this.value)" >
+						<label for="dark">Dark</label>
+					</div>
+				</div>
+				</div>
+				<!-- /// -->
+
+
+				<!-- Filter by Source -->
+				<div>
+				<label class="label">
+					Filter by source
+				</label>
+				<div class="radio-group">
+					<div class="radio-select">
+						<input id="all" type="radio" name="source" value="all" checked>
+						<label for="all">All</label>
+					</div>
+
+					<div class="radio-select">
+						<input id="instagram" type="radio" name="source" value="instagram"  >
+						<label for="instagram">Instagram</label>
+					</div>
+
+					<div class="radio-select">
+						<input id="facebook" type="radio" name="source" value="facebook" >
+						<label for="facebook">Facebook</label>
+					</div>
+
+					<div class="radio-select">
+						<input id="twitter" type="radio" name="source" value="twitter" >
+						<label for="twitter">Twitter</label>
+					</div>
+					<script>
+						const sourceRadioButtons = document.getElementsByName('source');
+						sourceRadioButtons.forEach(radioButton => {
+							radioButton.addEventListener('change', () => {
+							const selectedSource = document.querySelector('input[name="source"]:checked').value;
+							const flexboxElements = document.querySelectorAll('.cardDiv');
+
+							flexboxElements.forEach(element => {
+									if (selectedSource === 'all' || element.dataset.source === selectedSource) {
+										element.style.display = 'flex';
+									} else {
+										element.style.display = 'none';
+									}
+								});
+							});
+						});
+					</script>
+				</div>
+				</div>
+				<!-- /// -->
+			</div>
+		</div>
+
+		
+<div id="preview" class="preview">
+			<!-- Start creating layout html here -->
+
+			<!-- 1 -->
+		<div class="cardDiv"  data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/100/100" alt="" width="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2018-03-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/heart.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/400" alt="" class="mainImg">
+							<p>Duis in facilisis lectus. Nulla molestie erat erat, quis tempor enim sodales vitae. Sed tempus, libero fringilla rhoncus ullamcorper, justo elit dignissim ex, nec elementum quam sem in urna.</p>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.svg" alt="" height="25px" width="25px" id="clickable-heart" >
+							<p><span id="click-count">123</span></p>
+							<script>
+								const likeIcon = document.getElementById("clickable-heart");
+									const likeCount = document.getElementById("click-count");
+
+									let liked = false;
+									let count = 123;
+
+									likeIcon.addEventListener("click", () => {
+										if (!liked) {
+											count++;
+											likeCount.innerText = count;
+											likeIcon.classList.remove("far");
+											likeIcon.classList.add("fas");
+											liked = true;
+										} else {
+											count--;
+											likeCount.innerText = count;
+											likeIcon.classList.remove("fas");
+											likeIcon.classList.add("far");
+											liked = false;
+										}
+									});
+							</script>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+			<!-- 2 -->
+		<div class="cardDiv" data-source="instagram" >
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/600/410" alt="" width="50px" height="50px
+							">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-01-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/instagram.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/g/150/100" alt="" class="mainImg">
+							<p>Quisque metus nisi, consequat et molestie eget, facilisis ac odio. Nam lorem libero, efficitur ac velit at, egestas
+							tempor arcu. Nullam pharetra ex eget orci lobortis malesuada.</p>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart1" >
+							<p><span id="click-count1">0</span></p>
+							<script>
+								const likeIcon1 = document.getElementById("clickable-heart1");
+								const likeCount1 = document.getElementById("click-count1");
+
+								let liked1 = false;
+								let count1 = 0;
+
+								likeIcon1.addEventListener("click", () => {
+									if (!liked1) {
+										count1++;
+										likeCount1.innerText = count1;
+										likeIcon1.classList.remove("far");
+										likeIcon1.classList.add("fas");
+										liked1 = true;
+									} else {
+										count1--;
+										likeCount1.innerText = count1;
+										likeIcon1.classList.remove("fas");
+										likeIcon1.classList.add("far");
+										liked1 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart1 {
+								cursor: pointer;
+								}
+								#click-count1 {
+								font-weight: bold;
+								}
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br>
+			<!-- 3 -->
+		<div class="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/100/150" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2017-01-21 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/facebook.png" alt="" height="30px" style="margin-left: 1.8rem;" > 
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/420" alt=""  width="375" height="275">
+							<p>Lorem<br><br><br><br></p>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart2">
+							<p><span id="click-count2">9866555</span></p>
+							<script>
+								const likeIcon2 = document.getElementById("clickable-heart2");
+								const likeCount2 = document.getElementById("click-count2");
+
+								let liked2 = false;
+								let count2 = 9866555;
+
+								likeIcon2.addEventListener("click", () => {
+									if (!liked2) {
+										count2++;
+										likeCount2.innerText = count2;
+										likeIcon2.classList.remove("far");
+										likeIcon2.classList.add("fas");
+										liked2 = true;
+									} else {
+										count2--;
+										likeCount2.innerText = count2;
+										likeIcon2.classList.remove("fas");
+										likeIcon2.classList.add("far");
+										liked2 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart2 {
+									cursor: pointer;
+								}
+							
+								#click-count2 {
+									font-weight: bold;
+								}
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br>
+
+		<!-- 4 -->
+		<div class="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/120/120" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/430" alt="" height="274" width="373">
+							<p>Etiam eu blandit nisi. Aliquam rutrum faucibus mauris, sed egestas odio viverra at.
+							</p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart3">
+							<p><span id="click-count3">2</span></p>
+							<script>
+								const likeIcon3 = document.getElementById("clickable-heart3");
+								const likeCount3 = document.getElementById("click-count3");
+
+								let liked3 = false;
+								let count3 = 2;
+
+								likeIcon3.addEventListener("click", () => {
+									if (!liked3) {
+										count3++;
+										likeCount3.innerText = count3;
+										likeIcon3.classList.remove("far");
+										likeIcon3.classList.add("fas");
+										liked3 = true;
+									} else {
+										count3--;
+										likeCount3.innerText = count3;
+										likeIcon3.classList.remove("fas");
+										likeIcon3.classList.add("far");
+										liked3 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart3 {
+									cursor: pointer;
+								}
+							
+								#click-count3 {
+									font-weight: bold;
+								}
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br>
+
+		<!-- 5 -->
+		<div class="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/50/50" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2018-04-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/440" alt="" height="274">
+							<p>Vivamus a sem sit amet nisi pretium pretium. Curabitur blandit ut lectus non bibendum. <br><br><br></p>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart4">
+							<p><span id="click-count4">12343</span></p>
+							<script>
+								const likeIcon4 = document.getElementById("clickable-heart4");
+								const likeCount4 = document.getElementById("click-count4");
+
+								let liked4 = false;
+								let count4 = 12343;
+
+								likeIcon4.addEventListener("click", () => {
+									if (!liked4) {
+										count4++;
+										likeCount4.innerText = count4;
+										likeIcon4.classList.remove("far");
+										likeIcon4.classList.add("fas");
+										liked4 = true;
+									} else {
+										count4--;
+										likeCount4.innerText = count4;
+										likeIcon4.classList.remove("fas");
+										likeIcon4.classList.add("far");
+										liked4 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart4 {
+									cursor: pointer;
+								}
+							
+								#click-count4 {
+									font-weight: bold;
+								}
+
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br>
+
+		<!-- 6 -->
+		<div class="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/101/101" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+							    </a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/440" alt="" height="274">
+							<p>Duis in facilisis lectus. Nulla molestie erat erat, quis tempor enim sodales vitae. <br><br><br></p>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart5">
+							<p><span id="click-count5">123</span></p>
+							<script>
+								const likeIcon5 = document.getElementById("clickable-heart5");
+								const likeCount5 = document.getElementById("click-count5");
+
+								let liked5 = false;
+								let count5 = 123;
+
+								likeIcon5.addEventListener("click", () => {
+									if (!liked5) {
+										count5++;
+										likeCount5.innerText = count5;
+										likeIcon5.classList.remove("far");
+										likeIcon5.classList.add("fas");
+										liked5 = true;
+									} else {
+										count5--;
+										likeCount5.innerText = count5;
+										likeIcon5.classList.remove("fas");
+										likeIcon5.classList.add("far");
+										liked5 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart5 {
+									cursor: pointer;
+								}
+							
+								#click-count5 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br>
+
+			<!-- 7 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/150/120" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/800/400" alt="" height="274" width="373">
+							<p>Duis in facilisis lectus. Nulla molestie erat erat, quis tempor enim sodales vitae. </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart6">
+							<p><span id="click-count6">12</span></p>
+							<script>
+								const likeIcon6 = document.getElementById("clickable-heart6");
+								const likeCount6 = document.getElementById("click-count6");
+
+								let liked6 = false;
+								let count6 = 12;
+
+								likeIcon6.addEventListener("click", () => {
+									if (!liked6) {
+										count6++;
+										likeCount6.innerText = count6;
+										likeIcon6.classList.remove("far");
+										likeIcon6.classList.add("fas");
+										liked6 = true;
+									} else {
+										count6--;
+										likeCount6.innerText = count6;
+										likeIcon6.classList.remove("fas");
+										likeIcon6.classList.add("far");
+										liked6 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart6 {
+									cursor: pointer;
+								}
+							
+								#click-count6 {
+									font-weight: bold;
+								}
+
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 8 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/140/140" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2017-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/500" alt="" height="274" width="373">
+							<p>Vivamus a sem sit amet nisi pretium pretium. Curabitur blandit ut lectus non bibendum.br </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart7">
+							<p><span id="click-count7">23</span></p>
+							<script>
+								const likeIcon7 = document.getElementById("clickable-heart7");
+								const likeCount7 = document.getElementById("click-count7");
+
+								let liked7 = false;
+								let count7 = 23;
+
+								likeIcon7.addEventListener("click", () => {
+									if (!liked7) {
+										count7++;
+										likeCount7.innerText = count7;
+										likeIcon7.classList.remove("far");
+										likeIcon7.classList.add("fas");
+										liked7 = true;
+									} else {
+										count7--;
+										likeCount7.innerText = count7;
+										likeIcon7.classList.remove("fas");
+										likeIcon7.classList.add("far");
+										liked7 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart7 {
+									cursor: pointer;
+								}
+							
+								#click-count7 {
+									font-weight: bold;
+								}
+
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 9 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/100/100" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2017-12-08 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/700/400" alt="" height="274" width="373">
+							<p>Pellentesque lacinia volutpat turpis non fermentum. Cras at pellentesque augue. Aliquam eget metus sit amet turpis
+							consectetur posuere. </p>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart8">
+							<p><span id="click-count8">0</span></p>
+							<script>
+								const likeIcon8 = document.getElementById("clickable-heart8");
+								const likeCount8 = document.getElementById("click-count8");
+
+								let liked8 = false;
+								let count8 = 0;
+
+								likeIcon8.addEventListener("click", () => {
+									if (!liked8) {
+										count8++;
+										likeCount8.innerText = count8;
+										likeIcon8.classList.remove("far");
+										likeIcon8.classList.add("fas");
+										liked8 = true;
+									} else {
+										count8--;
+										likeCount8.innerText = count8;
+										likeIcon8.classList.remove("fas");
+										likeIcon8.classList.add("far");
+										liked8 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart8 {
+									cursor: pointer;
+								}
+							
+								#click-count8 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 10 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/102/102" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-02-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/700/500" alt="" height="274" width="373">
+							<p>Duis in facilisis lectus. Nulla molestie erat erat, quis tempor enim sodales vitae. </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart9">
+							<p><span id="click-count9">0</span></p>
+							<script>
+								const likeIcon9 = document.getElementById("clickable-heart9");
+								const likeCount9 = document.getElementById("click-count9");
+
+								let liked9 = false;
+								let count9 = 0;
+
+								likeIcon9.addEventListener("click", () => {
+									if (!liked9) {
+										count9++;
+										likeCount9.innerText = count9;
+										likeIcon9.classList.remove("far");
+										likeIcon9.classList.add("fas");
+										liked9 = true;
+									} else {
+										count9--;
+										likeCount9.innerText = count9;
+										likeIcon9.classList.remove("fas");
+										likeIcon9.classList.add("far");
+										liked9 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart9{
+									cursor: pointer;
+								}
+							
+								#click-count9 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 11 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/103/100" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/800/600" alt="" height="274" width="373">
+							<p>Aliquam odio libero, malesuada et iaculis a, facilisis bibendum dolor. </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart10">
+							<p><span id="click-count10">2</span></p>
+							<script>
+								const likeIcon10 = document.getElementById("clickable-heart10");
+								const likeCount10 = document.getElementById("click-count10");
+
+								let liked10 = false;
+								let count10 = 2;
+
+								likeIcon10.addEventListener("click", () => {
+									if (!liked10) {
+										count10++;
+										likeCount10.innerText = count10;
+										likeIcon10.classList.remove("far");
+										likeIcon10.classList.add("fas");
+										liked10 = true;
+									} else {
+										count10--;
+										likeCount10.innerText = count10;
+										likeIcon10.classList.remove("fas");
+										likeIcon10.classList.add("far");
+										liked10 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart10 {
+									cursor: pointer;
+								}
+							
+								#click-count10 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 12 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/40/100" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2020-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/facebook.png" alt="" height="30px" style="margin-left:2.2rem;">
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/700/600" alt="" height="274" width="373">
+							<p>Duis in facilisis lectus. </p><br><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart11">
+							<p><span id="click-count11">1</span></p>
+							<script>
+								const likeIcon11 = document.getElementById("clickable-heart11");
+								const likeCount11 = document.getElementById("click-count11");
+
+								let liked11 = false;
+								let count11 = 1;
+
+								likeIcon11.addEventListener("click", () => {
+									if (!liked11) {
+										count11++;
+										likeCount11.innerText = count11;
+										likeIcon11.classList.remove("far");
+										likeIcon11.classList.add("fas");
+										liked11 = true;
+									} else {
+										count11--;
+										likeCount11.innerText = count11;
+										likeIcon11.classList.remove("fas");
+										likeIcon11.classList.add("far");
+										liked11 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart11 {
+									cursor: pointer;
+								}
+							
+								#click-count11 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 13 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/80/100" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-12-15 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/1600/1400" alt="" height="274" width="373">
+							<p>Nulla molestie erat erat, quis tempor enim sodales vitae. </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart12">
+							<p><span id="click-count12">2324</span></p>
+							<script>
+								const likeIcon12 = document.getElementById("clickable-heart12");
+								const likeCount12 = document.getElementById("click-count12");
+
+								let liked12 = false;
+								let count12 = 2324;
+
+								likeIcon12.addEventListener("click", () => {
+									if (!liked12) {
+										count12++;
+										likeCount12.innerText = count12;
+										likeIcon12.classList.remove("far");
+										likeIcon12.classList.add("fas");
+										liked12 = true;
+									} else {
+										count12--;
+										likeCount12.innerText = count12;
+										likeIcon12.classList.remove("fas");
+										likeIcon12.classList.add("far");
+										liked12 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart12 {
+									cursor: pointer;
+								}
+							
+								#click-count12 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 14 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/80/80" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-10-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/1600/400" alt="" height="274" width="373">
+							<p>Aliquam odio libero, malesuada et iaculis a, facilisis bibendum dolor. </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart13">
+							<p><span id="click-count13">1223</span></p>
+							<script>
+								const likeIcon13 = document.getElementById("clickable-heart13");
+								const likeCount13 = document.getElementById("click-count13");
+
+								let liked13 = false;
+								let count13 = 1223;
+
+								likeIcon13.addEventListener("click", () => {
+									if (!liked13) {
+										count13++;
+										likeCount13.innerText = count13;
+										likeIcon13.classList.remove("far");
+										likeIcon13.classList.add("fas");
+										liked13 = true;
+									} else {
+										count13--;
+										likeCount13.innerText = count13;
+										likeIcon13.classList.remove("fas");
+										likeIcon13.classList.add("far");
+										liked13 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart13 {
+									cursor: pointer;
+								}
+							
+								#click-count13 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 15 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/110/110" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2016-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/2000/4000" alt="" height="274" width="373">
+							<p>Quis tempor enim sodales vitae. Sed tempus, libero fringilla rhoncus ullamcorper, justo elit dignissim ex, nec elementum
+							quam sem in urna. </p>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart14">
+							<p><span id="click-count14">12223</span></p>
+							<script>
+								const likeIcon14 = document.getElementById("clickable-heart14");
+								const likeCount14 = document.getElementById("click-count14");
+
+								let liked14 = false;
+								let count14 = 12223;
+
+								likeIcon14.addEventListener("click", () => {
+									if (!liked14) {
+										count14++;
+										likeCount14.innerText = count14;
+										likeIcon14.classList.remove("far");
+										likeIcon14.classList.add("fas");
+										liked14 = true;
+									} else {
+										count14--;
+										likeCount14.innerText = count14;
+										likeIcon14.classList.remove("fas");
+										likeIcon14.classList.add("far");
+										liked14 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart14 {
+									cursor: pointer;
+								}
+							
+								#click-count14 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 16 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/110/100" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2017-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/900/600" alt="" height="274" width="373">
+							<p>Suspendisse finibus lorem nibh, facilisis ullamcorper nunc consequat sit amet. </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart15">
+							<p><span id="click-count15">0</span></p>
+							<script>
+								const likeIcon15 = document.getElementById("clickable-heart15");
+								const likeCount15 = document.getElementById("click-count15");
+
+								let liked15 = false;
+								let count15 = 0;
+
+								likeIcon15.addEventListener("click", () => {
+									if (!liked15) {
+										count15++;
+										likeCount15.innerText = count15;
+										likeIcon15.classList.remove("far");
+										likeIcon15.classList.add("fas");
+										liked15 = true;
+									} else {
+										count15--;
+										likeCount15.innerText = count15;
+										likeIcon15.classList.remove("fas");
+										likeIcon15.classList.add("far");
+										liked15 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart15 {
+									cursor: pointer;
+								}
+							
+								#click-count15 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 17 -->
+		<div class="cardDiv" id="cardDiv" data-source="instagram">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/150/100" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-01-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/instagram.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/410" alt="" height="274" width="373">
+							<p>Vivamus a sem sit amet nisi pretium pretium. Curabitur blandit ut lectus non bibendum.br </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart16">
+							<p><span id="click-count16">0</span></p>
+							<script>
+								const likeIcon16 = document.getElementById("clickable-heart16");
+								const likeCount16 = document.getElementById("click-count16");
+
+								let liked16 = false;
+								let count16 = 0;
+
+								likeIcon16.addEventListener("click", () => {
+									if (!liked16) {
+										count16++;
+										likeCount16.innerText = count16;
+										likeIcon16.classList.remove("far");
+										likeIcon16.classList.add("fas");
+										liked16 = true;
+									} else {
+										count16--;
+										likeCount16.innerText = count16;
+										likeIcon16.classList.remove("fas");
+										likeIcon16.classList.add("far");
+										liked16 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart16 {
+									cursor: pointer;
+								}
+							
+								#click-count16 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 18 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/100/150" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2017-01-21 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/facebook.png" alt="" height="30px" style="margin-left:1.2rem;">
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/420" alt="" height="274" width="373">
+							<p>Lorem</p><br><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart17">
+							<p><span id="click-count17">9866555</span></p>
+							<script>
+								const likeIcon17 = document.getElementById("clickable-heart17");
+								const likeCount17 = document.getElementById("click-count17");
+
+								let liked17 = false;
+								let count17 = 9866555;
+
+								likeIcon17.addEventListener("click", () => {
+									if (!liked17) {
+										count17++;
+										likeCount17.innerText = count17;
+										likeIcon17.classList.remove("far");
+										likeIcon17.classList.add("fas");
+										liked17 = true;
+									} else {
+										count17--;
+										likeCount17.innerText = count17;
+										likeIcon17.classList.remove("fas");
+										likeIcon17.classList.add("far");
+										liked17 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart17 {
+									cursor: pointer;
+								}
+							
+								#click-count17 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 19 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/120/120" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2019-12-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://www.facebook.com/EmbedSocial/">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/430" alt="" height="274" width="373">
+							<p>Etiam eu blandit nisi. Aliquam rutrum faucibus mauris, sed egestas odio viverra at. </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart18">
+							<p><span id="click-count18">2</span></p>
+							<script>
+								const likeIcon18 = document.getElementById("clickable-heart18");
+								const likeCount18 = document.getElementById("click-count18");
+
+								let liked18 = false;
+								let count18 = 2;
+
+								likeIcon18.addEventListener("click", () => {
+									if (!liked18) {
+										count18++;
+										likeCount18.innerText = count18;
+										likeIcon18.classList.remove("far");
+										likeIcon18.classList.add("fas");
+										liked18 = true;
+									} else {
+										count18--;
+										likeCount18.innerText = count18;
+										likeIcon18.classList.remove("fas");
+										likeIcon18.classList.add("far");
+										liked18 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart18 {
+									cursor: pointer;
+								}
+							
+								#click-count18 {
+									font-weight: bold;
+								}
+								
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!-- 20 -->
+		<div class="cardDiv" id="cardDiv" data-source="facebook" name="cardDiv">
+			<div class="containerDiv">
+						<div class="headerDiv">
+							<div>
+							<img src="https://placekitten.com/g/50/50" alt="" width="50px" height="50px">
+							</div>
+							<div class="subheaderDiv">
+							<h1>John Smith</h1>
+							<p>2018-04-12 03:00:00</p>
+							</div>
+							<div class="icon">
+								<a href="https://instagram.com/embedsocial">
+							<img src="/icons/facebook.png" alt="" height="30px" >
+								</a>
+							</div>
+						</div>
+						<br>
+						<div class="bodyDiv">
+							<img src="https://placekitten.com/600/440" alt="" height="274" width="373">
+							<p>Vivamus a sem sit amet nisi pretium pretium. Curabitur blandit ut lectus non bibendum. </p><br><br>
+						</div>
+						<br>
+						<div class="footerDiv">
+							<br><img src="/icons/heart.png" alt="" height="25px" width="25px" id="clickable-heart19">
+							<p><span id="click-count19">12343</span></p>
+							<script>
+								const likeIcon19 = document.getElementById("clickable-heart19");
+								const likeCount19 = document.getElementById("click-count19");
+
+								let liked19 = false;
+								let count19 = 12343;
+
+								likeIcon19.addEventListener("click", () => {
+									if (!liked19) {
+										count19++;
+										likeCount19.innerText = count19;
+										likeIcon19.classList.remove("far");
+										likeIcon19.classList.add("fas");
+										liked19 = true;
+									} else {
+										count19--;
+										likeCount19.innerText = count19;
+										likeIcon19.classList.remove("fas");
+										likeIcon19.classList.add("far");
+										liked19 = false;
+									}
+								});
+							</script>
+							<style>
+								#clickable-heart19{
+									cursor: pointer;
+								}
+							
+								#click-count19 {
+									font-weight: bold;
+								}
+							</style>
+						</div>	
+			</div><!--end of container card div-->
+		</div> <!--end of card div-->
+
+		<br><br><br><br><br><br>
+
+		<!--LOAD MORE button-->
+		<!--LayOut ne e izraboten-->
+		
+
+
+		</div><!--preview-->
+</div><!--end of main container DIV-->
+
+
+
+	<script src="javascript.js"></script>
+</body>
+</html>
+
